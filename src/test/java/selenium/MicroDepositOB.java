@@ -9,10 +9,10 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.sikuli.script.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Test1 {
+public class MicroDepositOB {
 
 	Screen screen = new Screen();
-	String filepath = "C:\\Users\\shane\\Sikuli\\test-suite\\images.sikuli\\";
+	String filepath = "C:\\Users\\shane\\eclipse-workspace\\selenium\\src\\test\\resources\\images\\";
 
 	public Pattern getImage(String imageName) {
 		Pattern image = new Pattern(filepath + imageName);
