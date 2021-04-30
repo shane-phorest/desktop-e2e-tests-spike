@@ -11,3 +11,8 @@ Pre-requisites for running this test:
 4. Phorest desktop installed to default location - https://www.phorest.com/downloads/
 5. Clone this project and import to Eclipse
 6. Run the test in Eclipse - https://github.com/shane-phorest/desktop-e2e-tests-spike/blob/main/src/test/java/selenium/MicroDepositRitaUkNew.java
+
+
+If you want to use the Sikuli IDE for taking the snipped screenshots:
+
+http://sikulix.com/quickstart/
