@@ -47,7 +47,6 @@ public class MicroDepositRitaUkNew {
 
 	}
 
-
 	@Test
 	public void createOnlineBooking() throws InterruptedException {
 		WebDriverManager.chromedriver().setup();
@@ -108,7 +107,11 @@ public class MicroDepositRitaUkNew {
 
 	@Test
 	public void login() throws FindFailed {
-		App.open("/Applications/Memento/bin/Phorest.app");
+		if (OSDetector().equals("Mac")) {
+			App.open("/Applications/Memento/bin/Phorest.app");
+		} else {
+			App.open("C:\\Program Files\\Phorest\\Memento\\bin\\memento_gui.exe");
+		}
 
 		waitAndClick("LoginPage/server.png");
 
