@@ -1,27 +1,29 @@
 package selenium;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.*;
+import org.testng.annotations.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MicroDepositRitaUkNew {
 
 	Screen screen = new Screen();
 
-	// Points to the images folder at src/test/resources/images
 	public Pattern getImage(String imageName) {
-		Pattern image = new Pattern(MicroDepositRitaUkNew.class.getClassLoader().getResource("images/" + imageName))
-				.similar((float) 0.7);
+		Pattern image = new Pattern("src/test/resources/images/" + imageName).similar((float) 0.7);
 		return image;
 	}
 
 	public void waitAndClick(String image) throws FindFailed {
 		screen.wait(getImage(image), 30);
+		screen.click(getImage(image));
+	}
+
+	public void hoverAndClick(String image) throws FindFailed {
+		screen.wait(getImage(image), 30);
+		screen.hover(getImage(image));
 		screen.click(getImage(image));
 	}
 
@@ -36,11 +38,22 @@ public class MicroDepositRitaUkNew {
 		screen.type(text);
 	}
 
-	@Test
-	public void AcreateOnlineBooking() throws InterruptedException {
-		System.setProperty("webdriver.edge.driver", "C:\\Users\\shane\\Drivers\\msedgedriver.exe");
+	public static String OSDetector() {
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win")) {
+			return "Windows";
+		} else
+			return "Mac";
 
-		WebDriver driver = new EdgeDriver();
+	}
+
+
+	@Test
+	public void createOnlineBooking() throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+
+		WebDriver driver = new ChromeDriver();
+
 		driver.get("http://dev.phorest.com/book/salons/ritauknew");
 
 		Thread.sleep(3000);
@@ -60,7 +73,9 @@ public class MicroDepositRitaUkNew {
 		driver.findElement(By.xpath("//button[text()='Book Now']")).click();
 
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//a[text()='10:00 AM'])[2]")).click();
+		driver.findElement(By.xpath("(//a[text()='4:00 PM'])[1]")).click();
+
+		Thread.sleep(3000);
 
 		// Card details are filled in first time the test is run so this checks both
 		// cases
@@ -92,8 +107,8 @@ public class MicroDepositRitaUkNew {
 	}
 
 	@Test
-	public void Blogin() throws FindFailed {
-		App.open("C:\\Program Files\\Phorest\\Memento\\bin\\memento_gui.exe");
+	public void login() throws FindFailed {
+		App.open("/Applications/Memento/bin/Phorest.app");
 
 		waitAndClick("LoginPage/server.png");
 
@@ -118,15 +133,14 @@ public class MicroDepositRitaUkNew {
 	}
 
 	@Test
-	public void CpayForAppointment() throws FindFailed {
-		waitAndClick("maximise.png");
+	public void payForAppointment() throws FindFailed {
+		hoverAndClick("max.png");
 
 		waitAndClick("Menu/manager.png");
 
 		waitAndClick("Menu/appointments.png");
-		waitAndClick("AppointmentsPage/day.png");
-		waitAndClick("AppointmentsPage/day.png");
-		waitAndClick("AppointmentsPage/service45.png");
+		// waitAndClick("AppointmentsPage/day.png");
+		waitAndClick("AppointmentsPage/app.png");
 
 		waitAndClick("PurchasePage/pay.png");
 		waitAndClick("PurchasePage/cash.png");
@@ -135,7 +149,7 @@ public class MicroDepositRitaUkNew {
 	}
 
 	@Test
-	public void DeditSale() throws FindFailed {
+	public void editSale() throws FindFailed {
 		waitAndClick("Menu/manager.png");
 		waitAndClick("ManagerPage/SalesPage/sales.png");
 		waitAndClick("ManagerPage/SalesPage/salesTotal.png");
@@ -146,5 +160,6 @@ public class MicroDepositRitaUkNew {
 		waitAndClick("PurchasePage/payApp.png");
 		waitAndClick("PurchasePage/cash.png");
 		waitAndClick("PurchasePage/payApp.png");
+		waitAndClick("PurchasePage/yes.png");
 	}
 }
